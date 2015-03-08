@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "engines": {
+  "node": ">=0.10.0"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.9",
+    "gulp-concat": "~2.1.7",
+    "gulp-uglify": "~0.1.0",
+    "gulp-sass": "~0.4.1",
+    "gulp-jade": "~0.3.0",
+    "gulp-livereload": "~0.2.0",
+    "tiny-lr": "0.0.5",
+    "express": "~3.4.8",
+    "connect-livereload": "~0.5.3",
+    "browserify": "^9.0.3",
+    "vinyl-transform": "^1.0.0"
+  }
+}
