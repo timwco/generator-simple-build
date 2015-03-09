@@ -2,6 +2,8 @@
 
 More docs coming soon...
 
+One note about this. I'm using NPM for all `js` dependencies and Bower for all `css` dependencies.
+
 ## Usage
 
 Until this is completely working I won't be putting it on NPM.
