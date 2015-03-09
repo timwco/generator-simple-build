@@ -11,6 +11,7 @@
     "gulp-jade": "~0.3.0",
     "gulp-livereload": "~0.2.0",
     "tiny-lr": "0.0.5",
+    "main-bower-files": "^2.5.0",
     "express": "~3.4.8",
     "connect-livereload": "~0.5.3",
     "browserify": "^9.0.3",

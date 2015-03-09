@@ -1,5 +1,5 @@
 ;(function (){
-  
+
   'use strict';
 
   // Require Specific Modules
@@ -16,20 +16,21 @@
       transform   = require('vinyl-transform'),
       path        = require('path'),
       server      = tinylr(),
-      gulpif      = require('gulp-if');
-   
+      gulpif      = require('gulp-if'),
+      mbower      = require('main-bower-files');
+
   // Convert SASS (.scss) files to CSS (.css)
   gulp.task('css', function() {
     return gulp.src('app/styles/*.scss')
-      .pipe( 
-        sass( { 
+      .pipe(
+        sass( {
           includePaths: ['app/styles'],
           errLogToConsole: true
         } ) )
       .pipe(gulp.dest('dist/styles/') )
       .pipe(livereload( server ));
   });
-   
+
   // Browseriy's, Uglify's, & Concats JS
   // Note, we only Uglify when production is true
   function js(production) {
@@ -44,7 +45,7 @@
       .pipe(gulp.dest('dist/scripts/'))
       .pipe(livereload(server));
   }
-   
+
   // Process .jade files
   gulp.task('jade', function() {
     return gulp.src('app/**/*.jade')
@@ -53,17 +54,22 @@
       .pipe(livereload(server));
   });
 
-  // Starts an express server 
+  // Bower Dependencies
+  gulp.task('bower-files', function() {
+    return gulp.src(mbower())
+        .pipe(gulp.dest('dist/styles/vendor'));
+  });
+
+  // Starts an express server
   gulp.task('server', function() {
     var spawn = require('child_process').spawn
-
     app.use(require('connect-livereload')());
     app.use(express.static(path.resolve('./dist')));
     app.listen(8000);
     spawn('open', ['http://localhost:8000']);
     return console.log('Listening on port: 8000');
   });
-   
+
   // Sets live-reload to watch the files
   gulp.task('listen', function () {
     server.listen(35729, function (err) {
@@ -72,22 +78,20 @@
     gulp.watch('app/styles/*.scss',['css']);
     gulp.watch('app/scripts/*.js',['js']);
     gulp.watch('app/**/*.jade',['jade']);
-        
   });
 
   // Watch Task
   // Watches files and runs live-reload
-  gulp.task('watch', ['css', 'jade', 'server', 'listen'], function () {
+  gulp.task('watch', ['css', 'jade', 'server', 'bower-files', 'listen'], function () {
     return js(false);
   });
 
   // Build Task
-  gulp.task('build', ['css', 'jade'], function () {
+  gulp.task('build', ['css', 'jade', 'bower-files'], function () {
     return js(true);
   });
 
   // Default Task
   gulp.task('default', ['build']);
-  
 
 }());
